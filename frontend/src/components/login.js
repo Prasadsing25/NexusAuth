@@ -9,7 +9,7 @@ const Login = ({ setUser }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post('http://localhost:5000/api/auth/login', form);
+      const res = await axios.post('https://nexusauth-l2me.onrender.com/api/auth/login', form);
       localStorage.setItem('token', res.data.token);
       localStorage.setItem('username', res.data.username);
       setUser(res.data.username);
