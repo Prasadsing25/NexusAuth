@@ -13,8 +13,10 @@ router.post('/signup', async (req, res) => {
         const savedUser = await newUser.save();
 
         const token = jsonwebtoken.sign(
-            { id: savedUser._id, username: savedUser.username},
-            'secret_key',
+            { 
+                id: savedUser._id, 
+                username: savedUser.username},
+                process.env.JWT_SECRET,
             { expiresIn: '1h'}
         )
 
@@ -35,7 +37,12 @@ router.post('/login', async (req, res) => {
         const isMatch = await bcrypt.compare(password, user.password);
         if (!isMatch) return res.status(400).json({ message: "Invalid credentials"});
 
-        const token = jsonwebtoken.sign({ id: user._id, username: user.username }, 'secret_key', {expiresIn: '1h'});
+        const token = jsonwebtoken.sign({ 
+            id: user._id, 
+            username: user.username }, 
+            process.env.JWT_SECRET, 
+            {expiresIn: '1h'});
+            
         res.json({ token, username: user.username});
     } catch (err) {
         res.status(500).json( {error: err.message })
