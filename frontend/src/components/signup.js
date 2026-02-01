@@ -10,7 +10,7 @@ const Signup = ({setUser}) => {
     e.preventDefault();
     try {
       // Sending data to our Node.js backend
-      const res = await axios.post('https://nexusauth-l2me.onrender.com/api/auth/signup', form);
+      const res = await axios.post(`${process.env.REACT_APP_API_URL}/api/auth/signup`, form);
 
       localStorage.setItem('token', res.data.token);
       localStorage.setItem('username', res.data.username);
