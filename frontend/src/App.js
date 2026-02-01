@@ -11,13 +11,13 @@ function App() {
     <Router>
       <div className="min-h-screen bg-gray-100 flex items-center justify-center">
         <Routes>
+          <Route path="/signup" element={<Signup setUser={setUser} />} />
           <Route path="/login" element={<Login setUser={setUser} />} />
-          <Route path="/signup" element={<Signup />} />
-          <Route 
-            path="/dashboard" 
-            element={user ? <Dashboard user={user} setUser={setUser} /> : <Navigate to="/login" />} 
+          <Route
+            path="/dashboard"
+            element={user ? <Dashboard user={user} setUser={setUser} /> : <Navigate to="/login" />}
           />
-          <Route path="/" element={<Navigate to="/login" />} />
+          <Route path="/" element={<Navigate to="/signup" />} />
         </Routes>
       </div>
     </Router>

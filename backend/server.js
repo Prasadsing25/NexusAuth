@@ -7,10 +7,11 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
-mongoose.connect(process.env.Mongo_Url)
+mongoose.connect(process.env.MONGO_URL)
     .then(() => console.log("connection established"))
     .catch(err => console.log(err));
 
 app.use("/api/auth", require('./routes/auth'));
 
-app.listen(5000, console.log("Server Started on Port 5000"));
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => console.log(`Server is running on ${PORT}`));

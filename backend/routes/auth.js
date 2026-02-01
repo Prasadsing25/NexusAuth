@@ -10,8 +10,15 @@ router.post('/signup', async (req, res) => {
         const {username, email, password} = req.body;
         const hashedPassword = await bcrypt.hash(password, 10);
         const newUser = new User ({ username, email, password: hashedPassword });
-        await newUser.save();
-        res.status(201).json( {message: "User created"} );
+        const savedUser = await newUser.save();
+
+        const token = jsonwebtoken.sign(
+            { id: savedUser._id, username: savedUser.username},
+            'secret_key',
+            { expiresIn: '1h'}
+        )
+
+        res.status(201).json( {token, username: savedUser.username, message: "User created"} );
     } catch (err) {
         res.status(500).json({error: err.message })
     }
