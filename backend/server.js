@@ -6,7 +6,9 @@ require('dotenv').config();
 const app = express();
 app.use(express.json());
 app.use(cors({
-    origin: "https://nexus-auth-ivory.vercel.app/signup"
+    origin: "https://nexus-auth-ivory.vercel.app",
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    credentials: true
 }));
 
 mongoose.connect(process.env.MONGO_URL)
