@@ -6,7 +6,7 @@ require('dotenv').config();
 const app = express();
 app.use(express.json());
 app.use(cors({
-    origin: "https://nexus-auth-ivory.vercel.app",
+    origin: 'https://nexus-auth-ivory.vercel.app',
     methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true
 }));
