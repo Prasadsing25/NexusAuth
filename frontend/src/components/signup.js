@@ -4,10 +4,12 @@ import { useNavigate, Link } from 'react-router-dom';
 
 const Signup = ({setUser}) => {
   const [form, setForm] = useState({ username: '', email: '', password: '' });
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
     try {
       // Sending data to our Node.js backend
       const res = await axios.post(`${process.env.REACT_APP_API_URL}/api/auth/signup`, form);
@@ -19,6 +21,8 @@ const Signup = ({setUser}) => {
       navigate('/dashboard');
     } catch (err) {
       alert(err.response?.data?.error || "Signup failed. Try a different username/email.");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -66,8 +70,11 @@ const Signup = ({setUser}) => {
 
         <button
           type="submit"
-          className="w-full py-2 rounded text-white font-semibold transition-colors bg-blue-600 hover:bg-blue-700"
+          disabled={loading}
+          className={`w-full py-2 rounded text-white font-semibold transition-colors ${
+        loading ? 'bg-gray-400 cursor-not-allowed' : 'bg-blue-600 hover:bg-blue-700'} `}
         >
+          {loading ? "Creating Account..." : "Signup"}
           Signup
         </button>
       </form>

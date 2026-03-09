@@ -11,9 +11,13 @@ app.use(cors({
     credentials: true
 }));
 
-mongoose.connect(process.env.MONGO_URL)
-    .then(() => console.log("connection established"))
-    .catch(err => console.log(err));
+mongoose.connect(process.env.MONGO_URL {
+    maxPoolSize: 10,
+    serverSelectionTimeoutMS: 5000,
+    socketTimeoutMS: 45000
+}) 
+.then(() => console.log("connection established"))
+.catch(err => console.log(err));
 
 app.use("/api/auth", require('./routes/auth'));
 
